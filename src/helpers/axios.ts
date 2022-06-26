@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3001/api/';
+const baseUrl = 'https://petstore.swagger.io/v2/';
 
 const api = axios.create({
   baseURL: baseUrl,
   headers: {
-    Authorization: 'special-key',
+    'Content-Type': 'application/json',
   },
 });
 
