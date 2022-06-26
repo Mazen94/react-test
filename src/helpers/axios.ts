@@ -9,10 +9,7 @@ const api = axios.create({
   },
 });
 
-export const get = async (url: string) => {
-  const response = await api.get(baseUrl + url);
-  return response.data;
-};
+export const get = <T>(url: string) => api.get<T>(url);
 
 export const post = async (url: string, data: unknown) => {
   const response = await api.post(baseUrl + url, data);

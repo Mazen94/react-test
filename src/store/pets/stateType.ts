@@ -1,8 +1,8 @@
 export interface PetState {
   id: number;
-  category: number[];
+  categoryId?: number;
   name: string;
   photoUrls: string[];
-  tags: number[];
+  tagsIds: number[];
   status: string;
 }

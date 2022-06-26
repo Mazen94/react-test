@@ -1,11 +1,15 @@
-import { TypedUseSelectorHook, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AnyAction, combineReducers } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { CategoriesReducer } from './categories/reducers';
 import { FlagsReducer } from './flags/reducers';
 import { PetReducer } from './pets/reducers';
+import { TagsReducer } from './tags/reducers';
 export const rootReducer = combineReducers({
   flags: FlagsReducer,
   pets: PetReducer,
+  categories: CategoriesReducer,
+  tags: TagsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
