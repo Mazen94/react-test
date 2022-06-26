@@ -17,6 +17,7 @@ export const post = async (url: string, data: unknown) => {
 };
 
 export const deleteItem = async (url: string) => {
+  api.defaults.headers.common['api_key'] = 'special-key';
   const response = await api.delete(baseUrl + url);
   return response.data;
 };

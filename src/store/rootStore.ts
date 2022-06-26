@@ -5,11 +5,13 @@ import { CategoriesReducer } from './categories/reducers';
 import { FlagsReducer } from './flags/reducers';
 import { PetReducer } from './pets/reducers';
 import { TagsReducer } from './tags/reducers';
+import { ToastReducer } from './toast/reducers';
 export const rootReducer = combineReducers({
   flags: FlagsReducer,
   pets: PetReducer,
   categories: CategoriesReducer,
   tags: TagsReducer,
+  toast: ToastReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

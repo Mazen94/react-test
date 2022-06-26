@@ -5,14 +5,36 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { TagState } from '../../store/tags/stateType';
 import { CategoryState } from '../../store/categories/stateType';
 import Loader from '../../components/Loader';
+import CustomModal from '../../components/CustomModal';
 interface Props {
   pets: PetState[];
   isLoading: boolean;
   isError: boolean;
   tags: TagState;
   categories: CategoryState;
+  onDelete: (id: number) => void;
+  isDeleting: boolean;
 }
-const Pets = ({ pets, isLoading, isError, categories, tags }: Props) => {
+const Pets = ({ pets, isLoading, isError, categories, tags, onDelete, isDeleting }: Props) => {
+  const [show, setShow] = React.useState<boolean>(false);
+  const [idToDelete, setIdToDelete] = React.useState<number | null>(null);
+
+  const handleOnDelete = React.useCallback(
+    (_id: number) => {
+      setShow(true);
+      setIdToDelete(_id);
+    },
+    [show, idToDelete],
+  );
+  const onClose = React.useCallback(() => {
+    setShow(false);
+  }, [show]);
+  const onSave = React.useCallback(() => {
+    if (!idToDelete) return;
+    setShow(false);
+    onDelete(idToDelete);
+  }, [idToDelete, onDelete]);
+
   if (isLoading) {
     return <Loader />;
   }
@@ -53,7 +75,9 @@ const Pets = ({ pets, isLoading, isError, categories, tags }: Props) => {
                   )}
                   <Container style={{ display: 'flex', justifyContent: 'space-around' }}>
                     <Button variant="primary">Edit</Button>
-                    <Button variant="danger">Delete</Button>
+                    <Button variant="danger" onClick={() => handleOnDelete(+id)}>
+                      Delete
+                    </Button>
                   </Container>
                 </Card.Body>
               </Card>
@@ -61,6 +85,15 @@ const Pets = ({ pets, isLoading, isError, categories, tags }: Props) => {
           );
         })}
       </Row>
+      <CustomModal
+        isLoading={isDeleting}
+        display={show}
+        title={'delete pet'}
+        description={'Are you sure?'}
+        onClose={onClose}
+        onSave={onSave}
+        onSaveText={'Delete'}
+      />
     </Container>
   );
 };

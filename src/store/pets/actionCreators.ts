@@ -1,12 +1,14 @@
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../rootStore';
 import { PetsAction } from './actionsTypes';
-import { get } from '../../helpers/axios';
+import { deleteItem, get } from '../../helpers/axios';
 import { StoreFlagAction } from '../flags/actionsTypes';
 import { Pet } from '../../Models/Pet';
 import { formatPets } from './formatters';
 import { StoreCategoryAction, STORE_CATEGORY } from '../categories/actionsTypes';
 import { STORE_TAGS, TagsAction } from '../tags/actionsTypes';
+import { showToast } from '../toast/actionCreators';
+import { ToastAction } from '../toast/actionsTypes';
 
 export const fetchPetsAction =
   () => async (dispatch: ThunkDispatch<RootState, undefined, PetsAction | StoreFlagAction | StoreCategoryAction | TagsAction>) => {
@@ -22,4 +24,18 @@ export const fetchPetsAction =
       dispatch({ type: 'FETCH_PETS_LOADING', payload: { value: true } });
     }
     dispatch({ type: 'FETCH_PETS_LOADING', payload: { value: false } });
+  };
+
+export const deletePetAction =
+  (petId: number) => async (dispatch: ThunkDispatch<RootState, undefined, PetsAction | StoreFlagAction | ToastAction>) => {
+    dispatch({ type: 'DELETE_PET_LOADING', payload: { value: true } });
+    try {
+      await deleteItem(`pet/${petId}`);
+      dispatch({ type: 'DELETE_PET_SUCCESS_ACTION', payload: { petId } });
+    } catch (error) {
+      console.log('error', error);
+      // dispatch({ type: 'DELETE_PET_LOADING', payload: { value: true } });
+      dispatch(showToast('Error deleting pet', true));
+    }
+    dispatch({ type: 'DELETE_PET_LOADING', payload: { value: false } });
   };
