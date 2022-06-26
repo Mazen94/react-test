@@ -21,6 +21,10 @@ const Pets = ({ pets, isLoading, isError, categories, tags }: Props) => {
   }
   return (
     <Container>
+      <Button style={{ marginTop: 16 }} variant="primary">
+        Add new pet
+      </Button>
+
       <Row>
         {Object.keys(pets).map((id) => {
           // @ts-ignore
@@ -47,8 +51,10 @@ const Pets = ({ pets, isLoading, isError, categories, tags }: Props) => {
                       ))}
                     </Card.Text>
                   )}
-
-                  <Button variant="primary">Edit</Button>
+                  <Container style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <Button variant="primary">Edit</Button>
+                    <Button variant="danger">Delete</Button>
+                  </Container>
                 </Card.Body>
               </Card>
             </Col>
