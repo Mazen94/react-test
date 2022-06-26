@@ -1,1 +1,1 @@
-# react-test
+# Pet Store (ReactJs)
