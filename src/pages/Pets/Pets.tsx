@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { fetchPetsAction } from '../../store/pets/actionCreators';
+import { useTypedDispatch } from '../../store/rootStore';
 
-export default function Pets() {
+const Pets = () => {
+  const dispatch = useTypedDispatch();
+  useEffect(() => {
+    dispatch(fetchPetsAction());
+  }, []);
   return <div>Pets</div>;
-}
+};
+export default Pets;
